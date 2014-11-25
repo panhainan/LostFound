@@ -1,0 +1,50 @@
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.tablelist {
+	width: 100%;
+	clear: both;
+}
+
+.tablelist td {
+	line-height: 25px;
+	text-indent: 11px;
+}
+
+.tablelink {
+	color: #056dae;
+}
+
+.tablelist tbody tr.odd {
+	background: #f5f8fa;
+}
+
+.tablelist th {
+	background: url(../admin/images/th.gif) repeat-x;
+	height: 34px;
+	line-height: 34px;
+	border-top: solid 1px #EAEAEA;
+	text-indent: 11px;
+	text-align: left;
+	font-family: 仿宋;
+}
+
+.tablelist tbody tr:hover {
+	background: #e5ebee;
+}
+
+.tablelist a:LINK,.tablelist a:VISITED {
+	color: black;
+	font-size: 14px;
+	font-family: 仿宋;
+	text-decoration: none;
+}
+
+.tablelist a:HOVER {
+	color: red;
+	font-size: 14px;
+	font-family: 仿宋;
+	text-decoration: underline;
+}

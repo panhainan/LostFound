@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+	<!-- 开启使用开发模式，详细错误提示 -->
+	<constant name="struts.devMode" value="false" />
+	<!-- 将对象交给spring管理 -->
+	<constant name="struts.objectFactory" value="spring" />
+	<!-- 指定国际化资源文件 -->
+	<constant name="struts.custom.i18n.resources" value="globalMessages" />
+	<!-- 指定编码方式 -->
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<!-- 指定每次请求到达，重新加载资源文件 -->
+	<constant name="struts.i18n.reload" value="false" />
+	<!-- 指定每次配置文件更改后，自动重新加载 -->
+	<constant name="struts.configuration.xml.reload" value="false" />
+	<package name="admin" namespace="/" extends="struts-default">
+
+		<action name="admin_*" class="adminAction" method="{1}">
+			<result name="admin_add_success">/admin/lfad_main.jsp</result>
+			<result name="admin_log_success" type="redirect">/admin/lfad_main.jsp
+			</result>
+			<result name="admin_log_failed" type="redirect">/admin/lfad_login.jsp
+			</result>
+		</action>
+	</package>
+	<package name="user" namespace="/" extends="struts-default">
+		<action name="user_*" class="userAction" method="{1}">
+			<result name="user_login_success">/index.jsp</result>
+			<result name="user_login_failed">/error.jsp</result>
+			<result name="user_logout_success">/index.jsp</result>
+			<result name="user_getAllGoods_success">/user/goods.jsp</result>
+			<result name="user_getAllComments_success">/user/comments.jsp</result>
+			<result name="user_getAll_success">/admin/user_list.jsp</result>
+			<result name="user_goHome_success">/user/home.jsp</result>
+			<result name="user_goHome_failed">/error.jsp</result>
+		</action>
+	</package>
+	<package name="goods" namespace="/" extends="struts-default">
+		<interceptors>
+			<interceptor name="userAuthority" class="com.phn.interceptor.UserInterceptor"></interceptor>
+		</interceptors>
+		<global-results>
+			<result name="login">/error.jsp</result>
+		</global-results>
+		<action name="goods_NewLostInfo" class="goodsAction" method="NewLostInfo">
+			<param name="savePath">/img-lost</param>
+			<result name="goods_newLost_success" type="redirectAction">
+				<param name="actionName">goods_GoTheNewInfo</param>
+				<param name="index">${index}</param>
+			</result>
+			<result name="goods_newLostInfo_failed">/error.jsp</result>
+			<result name="goods_goNewLostInfo_success">/goods_theLstInfo.jsp</result>
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">image/bmp,image/png,image/gif,image/jpg</param>
+				<param name="includeMethods">NewLostInfo</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
+		<action name="goods_NewFoundInfo" class="goodsAction" method="NewFoundInfo">
+			<param name="savePath">/img-found</param>
+			<result name="goods_newFound_success" type="redirectAction">
+				<param name="actionName">goods_GoTheNewInfo</param>
+				<param name="index">${index}</param>
+			</result>
+			<result name="goods_newFoundInfo_failed">/error.jsp
+			</result>
+			<result name="goods_goNewFoundInfo_success">/goods_theFudInfo.jsp</result>
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">image/bmp,image/png,image/gif,image/jpg</param>
+				<param name="includeMethods">NewFoundInfo</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
+		<action name="goods_*" class="goodsAction" method="{1}">
+			<result name="goods_getAllLost_success">/admin/goods_lost_list.jsp</result>
+			<result name="goods_getAllFound_success">/admin/goods_found_list.jsp</result>
+			<result name="goods_getAllLostFront_success">/goods_losts.jsp</result>
+			<result name="goods_getAllFoundFront_success">/goods_founds.jsp</result>
+			<result name="goods_getAllLostIndex_success">/index_lost.jsp</result>
+			<result name="goods_getAllFoundIndex_success">/index_found.jsp</result>
+			<result name="goods_goNewInfo_success">/goods_newInfo.jsp</result>
+			<result name="goods_goTheNewLostInfo_success">/goods_theLstInfo.jsp</result>
+			<result name="goods_goTheNewFoundInfo_success">/goods_theFudInfo.jsp</result>
+			<result name="goods_goTheLostInfo_success">/goods_theLstInfo.jsp</result>
+			<result name="goods_goTheFoundInfo_success">/goods_theFudInfo.jsp</result>
+			<result name="goods_getLastGoodsIndex_success">/index_lastnews.jsp</result>
+			<result name="goods_deleteLostInfo_success" type="redirectAction">goods_GetAllLost
+			</result>
+			<result name="goods_deleteFoundInfo_success" type="redirectAction">goods_GetAllFound
+			</result>
+			<result name="goods_deleteInfo_failed">/error.jsp
+			</result>
+			<interceptor-ref name="userAuthority">
+				<param name="includeMethods">GoNewInfo,NewLostInfo,NewFoundInfo</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
+	</package>
+	<package name="comment" namespace="/" extends="struts-default">
+	<interceptors>
+			<interceptor name="userAuthority" class="com.phn.interceptor.UserInterceptor"></interceptor>
+		</interceptors>
+		<global-results>
+			<result name="login">/error.jsp</result>
+		</global-results>
+		<action name="comment_*" class="commentAction" method="{1}">
+			<result name="comment_newInfo_failed">/error.jsp</result>
+			<result name="comment_newInfo_success" type="redirectAction">
+				<param name="actionName">goods_GoTheInfo</param>
+				<param name="index">${index}</param>
+			</result>
+			<interceptor-ref name="userAuthority">
+				<param name="includeMethods">NewInfo</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
+	</package>
+	<package name="area" namespace="/" extends="struts-default">
+		<action name="area_*" class="areaAction" method="{1}">
+			<result name="area_newInfo_success" type="redirectAction">area_GetAll</result>
+			<result name="area_updateInfo_success" type="redirectAction">area_GetAll
+			</result>
+			<result name="area_deleteInfo_success" type="redirectAction">area_GetAll
+			</result>
+			<result name="area_goUpdateInfo_success">/admin/area_update.jsp</result>
+			<result name="area_getAll_success">/admin/area_list.jsp
+			</result>
+			<result name="area_newInfo_failed">/admin/lfad_error.jsp</result>
+			<result name="area_updateInfo_failed">/admin/lfad_error.jsp</result>
+			<result name="area_deleteInfo_failed">/admin/lfad_error.jsp</result>
+			<result name="area_goUpdateInfo_failed">/admin/lfad_error.jsp</result>
+		</action>
+	</package>
+	<package name="type" namespace="/" extends="struts-default">
+		<action name="type_*" class="typeAction" method="{1}">
+			<result name="type_newInfo_success" type="redirectAction">type_GetAll</result>
+			<result name="type_updateInfo_success" type="redirectAction">type_GetAll
+			</result>
+			<result name="type_deleteInfo_success" type="redirectAction">type_GetAll
+			</result>
+			<result name="type_goUpdateInfo_success">/admin/type_update.jsp</result>
+			<result name="type_getAll_success">/admin/type_list.jsp
+			</result>
+			<result name="type_newInfo_failed">/admin/lfad_error.jsp</result>
+			<result name="type_updateInfo_failed">/admin/lfad_error.jsp</result>
+			<result name="type_deleteInfo_failed">/admin/lfad_error.jsp</result>
+			<result name="type_goUpdateInfo_failed">/admin/lfad_error.jsp</result>
+		</action>
+	</package>
+	<package name="search" namespace="/" extends="struts-default">
+		<action name="sear_*" class="searchAction" method="{1}">
+			<result name="search_Txt_success">/searchTxt.jsp</result>
+		</action>
+	</package>
+	<package name="anno" namespace="/" extends="struts-default">
+		<action name="anno_*" class="annoAction" method="{1}">	
+		<result name="anno_newInfo_success" type="redirectAction">anno_Getlistanno</result>
+		<result name="anno_updateInfo_success"  type="redirectAction">anno_Getlistanno</result>
+		<result name="anno_deleteInfo_success"  type="redirectAction">anno_Getlistanno</result>
+		<result name="anno_findAnno_success">index_anno_more_right.jsp</result>
+		<result name="anno_List_success">index_anno_more.jsp</result>
+		<result name="anno_getIndex_success">index_anno.jsp</result>
+		<result name="anno_goTheInfo_success">index_anno_more.jsp</result>
+		<result name="anno_getAll_success">index_anno_more_left.jsp</result>
+		<result name="anno_RowCount_success">/admin/anno_list.jsp</result>	
+		<result name="anno_goUpdateInfo_success">/admin/anno_update.jsp</result>
+		<result name="anno_newInfo_failed">/admin/lfad_error.jsp</result>
+		<result name="anno_updateInfo_failed">/admin/lfad_error.jsp</result>
+		<result name="anno_deleteInfo_failed">/admin/lfad_error.jsp</result>
+		<result name="anno_goUpdateInfo_failed">/admin/lfad_error.jsp</result>
+		</action>
+	</package>
+	
+		<package name="help" namespace="/" extends="struts-default">
+		<action name="help_*" class="helpAction" method="{1}">	
+		<result name="help_newInfo_success" type="redirectAction">help_Getlisthelp</result>
+		<result name="help_updateInfo_success"  type="redirectAction">help_Getlisthelp</result>
+		<result name="help_deleteInfo_success"  type="redirectAction">help_Getlisthelp</result>
+		<result name="help_findAnno_success">index_help_more_right.jsp</result>
+		<result name="help_List_success">index_help_more.jsp</result>
+		<result name="help_getIndex_success">index_help.jsp</result>
+		<result name="help_goTheInfo_success">index_help_more.jsp</result>
+		<result name="help_getAll_success">index_help_more_left.jsp</result>
+		<result name="help_RowCount_success">/admin/help_list.jsp</result>	
+		<result name="help_goUpdateInfo_success">/admin/help_update.jsp</result>
+		<result name="help_newInfo_failed">/admin/lfad_error.jsp</result>
+		<result name="help_updateInfo_failed">/admin/lfad_error.jsp</result>
+		<result name="help_deleteInfo_failed">/admin/lfad_error.jsp</result>
+		<result name="help_goUpdateInfo_failed">/admin/lfad_error.jsp</result>
+		</action>
+	</package>
+</struts>

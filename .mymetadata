@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="LostFound"
+  id="myeclipse.1409645965549"
+  context-root="/LostFound"
+  j2ee-spec="6.0"
+  archive="LostFound.war">
+  <attributes>
+    <attribute name="webrootdir" value="src/main/webapp" />
+  </attributes>
+</project-module>
+

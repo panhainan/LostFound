@@ -1,0 +1,139 @@
+.index_Body {
+	width: 1004px;
+	padding: 0px;
+	margin: auto;
+}
+
+.lf_top_nav {
+	width: 1004px;
+	height: 245px;
+	float: left;
+}
+
+.index_searchBody {
+	width: 1004px;
+	height: 40px;
+	float: left;
+	margin-top: 1px;
+	background-color: #F0F0F0;
+	/* 	border: 1px solid #EAEAEA; */
+}
+
+.index_searchTxt {
+	width: 430px;
+	padding-left:10px;
+	height: 26px;
+	margin-left: 20px;
+	margin-top: 6px;
+	border: 1px solid #CCCCCC;
+	font-family: "微软雅黑";
+}
+
+.index_searchBtn {
+	width: 50px;
+	height: 26px;
+	margin-top: 6px;
+	border: 1px solid #CCCCCC;
+	background-color: #7FB540;
+	font-family: "微软雅黑";
+}
+
+.index_lastNews {
+	width: 992px;
+	height: 200px;
+	float: left;
+	margin-top: 4px;
+	border: 6px solid #EAEAEA;
+}
+
+.index_lost {
+	width: 340px;
+	height: 700px;
+	float: left;
+	margin-top: 10px;
+	border: 6px solid #EAEAEA;
+}
+
+.index_found {
+	width: 340px;
+	height: 700px;
+	float: left;
+	margin-top: 10px;
+	margin-left: 10px;
+	border: 6px solid #EAEAEA;
+}
+
+.index_addAnnoNewHelp {
+	width: 280px;
+	height: 700px;
+	float: left;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+.index_addAnnoNewHelp_add {
+	width: 280px;
+	height: 50px;
+	float: left;
+	/* 	border: 6px solid #62BC2B; */
+}
+
+#index_addAnnoNewHelp_addBtn,.index_addAnnoNewHelp_addBtn:VISITED {
+	width: 280px;
+	height: 50px;
+	background-image: url('../image/addbtn.jpg');
+	text-decoration: none;
+	font-size: 28px;
+	color: white;
+	font-weight: bolder;
+	text-align: center;
+	line-height: 50px;
+}
+
+#index_addAnnoNewHelp_addBtn:HOVER,#index_addAnnoNewHelp_addBtn:ACTIVE {
+	width: 280px;
+	height: 50px;
+	background-image: url('../image/addbtn_hover.jpg');
+	border: 0px;
+	text-decoration: none;
+}
+
+.index_addAnnoNewHelp_anno {
+	width: 268px;
+	height: 220px;
+	float: left;
+	margin-top: 8px;
+	border: 6px solid #EAEAEA;
+}
+
+.index_addAnnoNewHelp_new {
+	width: 268px;
+	height: 220px;
+	float: left;
+	margin-top: 8px;
+	border: 6px solid #EAEAEA;
+}
+
+.index_addAnnoNewHelp_help {
+	width: 268px;
+	height: 400px;
+	float: left;
+	margin-top: 8px;
+	border: 6px solid #EAEAEA;
+}
+
+.index_friend {
+	width: 992px;
+	height: 100px;
+	float: left;
+	margin-top: 10px;
+	border: 6px solid #EAEAEA;
+}
+
+.lf_bottom {
+	width: 992px;
+	height: 120px;
+	float: left;
+	margin-top: 10px;
+	border: 6px solid #EAEAEA;
+}
