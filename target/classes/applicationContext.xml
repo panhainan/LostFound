@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+      	      http://www.springframework.org/schema/beans/spring-beans.xsd  
+              http://www.springframework.org/schema/aop
+              http://www.springframework.org/schema/aop/spring-aop.xsd  
+              http://www.springframework.org/schema/context
+              http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+              http://www.springframework.org/schema/tx
+              http://www.springframework.org/schema/tx/spring-tx.xsd  
+			  http://www.springframework.org/schema/util
+			  http://www.springframework.org/schema/util/spring-util.xsd "
+	default-autowire="byName">
+	<context:property-placeholder location="classpath:db.properties" />
+	<!-- 使用 annotation -->
+	<context:annotation-config />
+	<!-- 使用 annotation 自动注册bean,并检查@Controller, @Service, @Repository注解已被注入 -->
+	<context:component-scan base-package="com.phn.action" />
+	<context:component-scan base-package="com.phn.service" />
+	<context:component-scan base-package="com.phn.dao" />
+
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<!-- 数据库驱动 -->
+		<property name="driverClass" value="${database.driverClassName}" />
+		<!-- 相应驱动的jdbcUrl -->
+		<property name="jdbcUrl" value="${database.url}" />
+		<!-- 数据库的用户名 -->
+		<property name="user" value="${database.username}" />
+		<!-- 数据库的密码 -->
+		<property name="password" value="${database.password}" />
+		<!-- 设置数据库连接池的最大连接数 -->
+		<property name="maxPoolSize">
+			<value>50</value>
+		</property>
+		<!-- 设置数据库连接池的最小连接数 -->
+		<property name="minPoolSize">
+			<value>5</value>
+		</property>
+		<!-- 设置数据库连接池的初始化连接数 -->
+		<property name="initialPoolSize">
+			<value>5</value>
+		</property>
+		<!-- 设置数据库连接池的连接的最大空闲时间,单位为秒 -->
+		<property name="maxIdleTime">
+			<value>20</value>
+		</property>
+		<!--c3p0缓存Statement的数量数 -->
+		<property name="maxStatements">
+			<value>50</value>
+		</property>
+		<!-- 当连接池里面的连接用完的时候，C3P0一下获取的新的连接数 -->
+		<property name="acquireIncrement">
+			<value>20</value>
+		</property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<!-- 指定hibernate配置文件的位置 -->
+		<!-- <property name="configLocation" value="classpath:hibernate.cfg.xml"></property> -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.autoReconnect">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<!-- 解决session关闭问题 -->
+				<prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+				<prop key="current_session_context_class">thread</prop>
+				<!-- 自动创建|更新|验证数据库表结构 validate 加载hibernate时，验证创建数据库表结构 create 每次加载hibernate，重新创建数据库表结构 
+					create-drop 加载hibernate时创建，退出是删除表结构 update 加载hibernate自动更新数据库结构 -->
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>
+				<prop key="hibernate.max_fetch_depth">3</prop>
+			</props>
+		</property>
+		<!-- <property name="annotatedClasses"> <list> <value>com.phn.entity.Admin</value> 
+			<value>com.phn.entity.User</value> </list> </property> -->
+		<!-- 包扫描的方式加载注解类(推荐) -->
+		<property name="packagesToScan">
+			<list>
+				<value>com.phn.entity</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 用注解来实现事务管理 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- 使用annotation定义事务 --><!-- 支持 @Transactional 标记 -->
+	<tx:annotation-driven transaction-manager="transactionManager"
+		proxy-target-class="true" />
+</beans>
