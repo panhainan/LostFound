@@ -1,8 +1,7 @@
 #LostFound
-<font size="4">
+  LostFound失物招领网，本意是打算为我们学校长沙理工大学而做，就是一个有关失物招领的交流平台。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LostFound失物招领网，本意是打算为我们学校长沙理工大学而做，就是一个有关失物招领的交流平台。
-<br/><br/>
+
 项目用到的相关技术、工具等
 ----------
 
@@ -18,8 +17,8 @@
 
 服务器：Tomcat 7.x
 
-<br/><br/><br/>
-<font color="red">注意：</font>**打开根目录里面的sql文件，在数据库软件中建一个lostfound数据库，然后运行sql文件。还有数据库默认用户名root和密码123456，如果需要修改请到src下面修改db.properties文件**
-<br/><br/><br/>
-点击查看<a href="https://github.com/panhainan/panhainan.github.io/blob/master/project/LostFound.md" >LostFound失物招领平台详细介绍</a>
-</font>
+
+
+注意：**打开根目录里面的sql文件，在数据库软件中建一个lostfound数据库，然后运行sql文件。还有数据库默认用户名root和密码123456，如果需要修改请到src下面修改db.properties文件**
+
+
